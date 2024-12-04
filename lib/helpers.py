@@ -37,13 +37,7 @@ def check_homerooms(target_room):
     return None
 
 
-def helper_1():
-    homerooms = Homeroom.get_all()
-    if(len(homerooms)==0):
-        print("The homerooms table is empty")
-    else:
-        for homeroom in homerooms:
-            print(homeroom)
+
 
 def list_homerooms():
     homerooms = Homeroom.get_all()
