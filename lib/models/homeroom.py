@@ -12,7 +12,7 @@ class Homeroom:
 
     def __repr__(self):
         return (
-            f"{self.id}.<Homeroom :Room: {self.room},Floor Level: {self.floor}, {self.teacher}>"
+            f"<Homeroom :Room: {self.room},Floor Level: {self.floor}, {self.teacher}>"
         )
 
     @property 
@@ -90,6 +90,15 @@ class Homeroom:
         return homeroom
     
     def update(self):
+        """Update the table row corresponding to the current Department instance."""
+        sql = """
+            UPDATE departments
+            SET room = ?, teacher = ?, floor = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.room, self.teacher,self.floor, self.id))
+        CONN.commit()
+    def delete(self):
         sql = """
             DELETE FROM homerooms 
             WHERE id = ?
@@ -145,6 +154,15 @@ class Homeroom:
         row  = CURSOR.execute(sql,(room,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
+    @classmethod
+    def find_by_floor(cls,floor):
+        sql="""
+            SELECT *
+            FROM homerooms 
+            WHERE floor is ?
+        """
+        row = CURSOR.execute(sql,(floor,)).fetchone()
+        return cls.instance_from_db(row) if row else None
     def students(self):
         from models.student import Student
         sql = """

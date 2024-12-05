@@ -19,17 +19,29 @@ def seed_data():
     Student.create("Mary Jason",11,3.9,2,homeroom_101)
     Student.create("Larry Nona",10,3.3,1,homeroom_101)
     
+def delete_Homeroom():
+    hr_room = input("Enter the room number of homeroom you want to remove: ")
+    if homeroom := Homeroom.find_by_room(hr_room):
+        homeroom.delete()
+        print(f"Homeroom {hr_room} deleted")
+    else:
+        print(f"Homeroom {hr_room} not found")
 
-def helper_prime():
-    Homeroom.drop_table()
-    Homeroom.create_table()
+def list_by_floor(hr_floor):
+    
+    homerooms = Homeroom.get_all()
+    count = 0
+    for homeroom in homerooms:
+        if homeroom.floor == int(hr_floor):
+            print(homeroom)
+            count += 1
+    if count ==0:
+        print("Floor does not exist")
+        
 
 def check_homerooms(target_room):
     if (isinstance(target_room,str)):
-
-        
         return None
-    
     homerooms = Homeroom.get_all()
     for homeroom in homerooms:
         if homeroom.room == target_room:
@@ -40,9 +52,6 @@ def check_homerooms(target_room):
         
     return None
 
-
-
-
 def list_homerooms():
     homerooms = Homeroom.get_all()
     for homeroom in homerooms:
@@ -50,7 +59,7 @@ def list_homerooms():
 
 def valid_choice(prompt):
     user_input = input(prompt)
-    if user_input.lower() in ['q','a','b','g']:
+    if user_input.lower() in ['q','a','b','e','r','t']:
         return user_input.lower()
     try:
         int(user_input)
@@ -58,19 +67,31 @@ def valid_choice(prompt):
     except ValueError:
         print("invalid input #4")
         return user_input
-        
-
-
-
+def int_check(prompt):
+    user_input = input(prompt)
+    try:
+        int(user_input)
+        return int(user_input)
+    except ValueError:
+        print("invalid input #5")
+        return user_input
 def convert_room_to_id(num):
-    
-    
     homerooms = Homeroom.get_all()
     for homeroom in homerooms:
         if num == homeroom.room:
             print(f"TEST: HOMEROOM ID: {homeroom.id}")
             return homeroom.id
     return None
+def create_homeroom():
+    room = input("Enter the homeroom room number: ")
+    teacher = input("Enter name of the teacher: ")
+    floor = input("Enter the level of the floor: ")
+    try:
+        homeroom = Homeroom.create(int(room),teacher,int(floor))
+        print(f'Success: {homeroom}')
+    except Exception:
+        print("Error: ",Exception)
+
     
 def list_students_in_hr(num):
     

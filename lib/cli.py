@@ -8,7 +8,11 @@ from helpers import (
     list_homerooms,
     list_students_in_hr,
     seed_data,
-    valid_choice
+    valid_choice,
+    delete_Homeroom,
+    create_homeroom,
+    list_by_floor,
+    int_check
 )
 
 
@@ -33,21 +37,25 @@ def main():
             while inner_choice !="b":
                 #CHOICE LEVEL 2
                 menu_top()
+                
+                list_homerooms()
                 inner_menu()
                 #IF STRING, TURNS TO LOWERCASE
                 inner_choice = valid_choice("> ")
                 menu_top()
+                
                 if inner_choice == 'q':
                     exit_program()
                 elif inner_choice =='a':
-                    pass
+                    create_homeroom()
                 elif inner_choice =='r':
-                    pass
-                elif inner_choice =='g':
-                    list_homerooms()
+                    delete_Homeroom()
+                elif inner_choice =='t':
+                    t_option = int_check("Enter floor level: ")
+                    list_by_floor(t_option)
 
                 #checks if room # is found in Homeroom table
-                if check_homerooms((inner_choice)):
+                elif check_homerooms((inner_choice)):
                     list_students_in_hr(convert_room_to_id(inner_choice))
                 
                     
@@ -65,10 +73,11 @@ def menu_top():
     print("****************************")
 def inner_menu():
     
-    print("b. To go back")
+    print("b. Go back")
     print("q. Exit the program")
-    print("a. add a homeroom")
+    print("a. Add a homeroom")
     print("t. List by floor")
+    print("r. Remove a homeroom")
 
 def super_inner_menu():
     pass
