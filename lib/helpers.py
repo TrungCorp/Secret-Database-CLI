@@ -26,14 +26,18 @@ def helper_prime():
 
 def check_homerooms(target_room):
     if (isinstance(target_room,str)):
+
+        
         return None
-    target = (target_room)
+    
     homerooms = Homeroom.get_all()
     for homeroom in homerooms:
-        if homeroom.room == target:
+        if homeroom.room == target_room:
             #print(f"Found homeroom: {homeroom}")
             return homeroom
-    print(f"No homeroom found with room number {target}")
+    
+    print(f"No homeroom found with room number {target_room}")
+        
     return None
 
 
@@ -46,14 +50,14 @@ def list_homerooms():
 
 def valid_choice(prompt):
     user_input = input(prompt)
-    if user_input.lower() in ['q','a','b']:
+    if user_input.lower() in ['q','a','b','g']:
         return user_input.lower()
     try:
         int(user_input)
         return int(user_input)
     except ValueError:
-        print("Invalid input")
-        return None
+        print("invalid input #4")
+        return user_input
         
 
 
