@@ -31,6 +31,14 @@ def delete_Homeroom():
         print(f"Homeroom {hr_room} deleted")
     else:
         print(f"Homeroom {hr_room} not found")
+    
+def delete_student():
+    student_name = input("Enter the name of the student you want to remove: ")
+    if student := Student.find_by_name(student_name):
+        student.delete()
+        print(f"Student {student_name} deleted")
+    else:
+        print(f"Student {student_name} not found")
 
 def list_by_floor(hr_floor):
     
@@ -50,10 +58,14 @@ def list_homerooms():
     homerooms = Homeroom.get_all()
     for homeroom in homerooms:
         print(homeroom)
+def list_students():
+    students = Student.get_all()
+    for student in students:
+        print(student)
 #VALIDATES USER INPUT
 def valid_choice(prompt):
     user_input = input(prompt)
-    if user_input.lower() in ['q','a','b','e','r','t']:
+    if user_input.lower() in ['q','a','b','f','r','s','z1','m']:
         return user_input.lower()
     try:
         int(user_input)

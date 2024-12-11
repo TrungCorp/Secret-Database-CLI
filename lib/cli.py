@@ -12,7 +12,9 @@ from helpers import (
     create_homeroom,
     list_by_floor,
     int_check,
-    create_student
+    list_students,
+    create_student,
+    delete_student
 )
 
 
@@ -23,6 +25,7 @@ def main():
     inner_choice = ""
     #LVL 3
     super_inner_choice = ""
+    sort_choice = ""
     print("Welcome Counselor")
     menu_top()
     
@@ -30,7 +33,11 @@ def main():
     while choice !="q":
         #RESETS INNER_CHOICE AND SUPER_INNER
         inner_choice = ""
-        super_inner_choice = ""
+        s_inner_choice = ""
+        m_inner_choice = ""
+        f_inner_choice = ""
+        
+
         
         menu()
         choice = valid_choice("> ")
@@ -42,7 +49,7 @@ def main():
                 #CHOICE LEVEL 2
                 menu_top()
                 
-                list_homerooms()
+                displayed_list(sort_choice)
                 inner_menu()
                 #IF STRING, TURNS TO LOWERCASE
                 inner_choice = valid_choice("> ")
@@ -50,22 +57,58 @@ def main():
                 
                 if inner_choice == 'q':
                     exit_program()
-                elif inner_choice =='a':
-                    create_homeroom()
-                elif inner_choice =='r':
-                    delete_Homeroom()
-                elif inner_choice =='t':
-                    t_option = int_check("Enter floor level: ")
-                    list_by_floor(t_option)
-                elif inner_choice == 'e':
-                    print("e choice selected")
-                #checks if room # is found in Homeroom table
-                elif (inner_choice) =='e':
-                    e_option = int_check("Enter the room number of homeroom: ")
-                    list_students_in_hr(convert_room_to_id(e_option))
-                    super_inner_choice = input("> ")
-                    while super_inner_choice !='b':
-                        super_inner_menu()
+                elif inner_choice == 'z1':
+                    print(f'inner choice: {inner_choice},f choice: {f_inner_choice}, super inner choice: {super_inner_choice}')
+                elif inner_choice =='s':
+                    while s_inner_choice != 'b':
+                        s_inner_choice = valid_choice("> ")
+                        if s_inner_choice =='h':
+                            sort_choice = 'h'
+                            s_inner_choice = ""
+                        elif s_inner_choice == "m":
+                            sort_choice = 'm'
+                            s_inner_choice=""
+                            
+
+                    
+                elif inner_choice =='f':
+                    while f_inner_choice!='b':
+                        print("MANAGE BY HR")
+                        print("q. Quit")
+                        print("b. Back")
+                        print("a. Add Homeroom")
+                        print("r. Remove Homeroom")
+                        f_inner_choice = valid_choice("> ")
+                        if f_inner_choice =='a':
+                            create_homeroom()
+                            f_inner_choice = ""
+                        elif f_inner_choice =='r':
+                            delete_Homeroom()
+                            f_inner_choice = ""
+                        elif f_inner_choice =='q':
+                            exit_program()
+                    inner_choice =""
+                    f_inner_choice = ""
+                    
+                elif inner_choice =='m':
+                    
+                    while m_inner_choice != 'b':
+                        manage_by_student_menu()
+                        m_inner_choice = valid_choice("> ")
+                        if m_inner_choice == 'a':
+                            create_student()
+                            m_inner_choice = ""
+                        elif m_inner_choice == 'r':
+                            delete_student()
+                            m_inner_choice = ""
+                        elif m_inner_choice == 'q':
+                            exit_program()
+                        
+                    inner_choice = ""
+                    m_inner_choice= ""
+                    
+                
+       
                 
                     
                 
@@ -84,13 +127,21 @@ def inner_menu():
     
     print("b. Go back")
     print("q. Exit the program")
-    print("g. View all Homerooms")
-    print("f. View Homeroom by floor level")
-    print("a. Add a homeroom")
+    print("s. Sort displayed list")
+    print("f. Manage by Homeroom")
+    print("m. Manage by Student")
     
     print("r. Remove a homeroom")
 
-def super_inner_menu():
+def displayed_list(choice):
+    if choice == "":
+        list_homerooms()
+    elif choice == 'h':
+        list_homerooms
+    elif choice == 'm':
+        list_students
+
+def manage_by_student_menu():
     menu_top()
     print("b. Go back")
     print("q. Exit the program")
