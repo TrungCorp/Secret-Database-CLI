@@ -56,16 +56,16 @@ def list_by_floor(hr_floor):
 
 def list_homerooms():
     homerooms = Homeroom.get_all()
-    for homeroom in homerooms:
-        print(homeroom)
+    for i,homeroom in enumerate(homerooms,start=1):
+        print(f"{i}. {homeroom}")
 def list_students():
     students = Student.get_all()
-    for student in students:
-        print(student)
+    for i,student in enumerate(students,start=1):
+        print(f'{i}. {student}')
 #VALIDATES USER INPUT
 def valid_choice(prompt):
     user_input = input(prompt)
-    if user_input.lower() in ['q','a','b','f','r','s','z1','m']:
+    if user_input.lower() in ['q','a','b','f','e','r','s','z1','m','h','b']:
         return user_input.lower()
     try:
         int(user_input)

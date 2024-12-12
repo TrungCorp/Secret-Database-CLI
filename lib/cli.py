@@ -26,6 +26,9 @@ def main():
     #LVL 3
     super_inner_choice = ""
     sort_choice = ""
+    s_inner_choice = ""
+    m_inner_choice = ""
+    f_inner_choice = ""
     print("Welcome Counselor")
     menu_top()
     
@@ -33,9 +36,7 @@ def main():
     while choice !="q":
         #RESETS INNER_CHOICE AND SUPER_INNER
         inner_choice = ""
-        s_inner_choice = ""
-        m_inner_choice = ""
-        f_inner_choice = ""
+        
         
 
         
@@ -58,16 +59,31 @@ def main():
                 if inner_choice == 'q':
                     exit_program()
                 elif inner_choice == 'z1':
-                    print(f'inner choice: {inner_choice},f choice: {f_inner_choice}, super inner choice: {super_inner_choice}')
+                    print(f'inner choice: {inner_choice},f choice: {f_inner_choice}, s inner choice: {s_inner_choice}')
                 elif inner_choice =='s':
                     while s_inner_choice != 'b':
+                        sort_menu()
                         s_inner_choice = valid_choice("> ")
                         if s_inner_choice =='h':
+                            if s_inner_choice == sort_choice:
+                                print("Sort option already selected!")
+                                s_inner_choice = ""
+                                inner_choice = ""
+                                break
+
                             sort_choice = 'h'
                             s_inner_choice = ""
+                            inner_choice = ""
+                            break
                         elif s_inner_choice == "m":
                             sort_choice = 'm'
                             s_inner_choice=""
+                            inner_choice =""
+                            break
+                        else:
+                            print("Invalid choice")
+                    inner_choice= ""
+                    s_inner_choice= ""
                             
 
                     
@@ -82,9 +98,11 @@ def main():
                         if f_inner_choice =='a':
                             create_homeroom()
                             f_inner_choice = ""
+                            inner_choice = ""
                         elif f_inner_choice =='r':
                             delete_Homeroom()
                             f_inner_choice = ""
+                            inner_choice= ""
                         elif f_inner_choice =='q':
                             exit_program()
                     inner_choice =""
@@ -130,17 +148,32 @@ def inner_menu():
     print("s. Sort displayed list")
     print("f. Manage by Homeroom")
     print("m. Manage by Student")
+    print("g. Sort by grade level")
+    print("")
     
-    print("r. Remove a homeroom")
+    
+def sort_menu():
+    print("SORT LIST")
+    print("b. Go back")
+    print("q. Exit the program")
+    print("h. List all Homerooms")
+    print("m. List all Students")
+
+    
+def sort_check(picked_choice,sort_choice):
+    pass
+
 
 def displayed_list(choice):
     if choice == "":
         list_homerooms()
+        menu_top()
     elif choice == 'h':
-        list_homerooms
+        list_homerooms()
+        menu_top()
     elif choice == 'm':
-        list_students
-
+        list_students()
+        menu_top()
 def manage_by_student_menu():
     menu_top()
     print("b. Go back")
