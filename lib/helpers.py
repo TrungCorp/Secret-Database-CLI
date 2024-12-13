@@ -49,7 +49,14 @@ def list_by_floor(hr_floor):
             print(homeroom)
             count += 1
     if count ==0:
-        print("Floor does not exist")
+        print("No homerooms found on this floor")
+def list_by_grade(grade):
+    students = Student.get_all()
+    for student in students:
+        if student.grade == grade:
+            print(student)
+        
+
         
 
 
@@ -65,7 +72,7 @@ def list_students():
 #VALIDATES USER INPUT
 def valid_choice(prompt):
     user_input = input(prompt)
-    if user_input.lower() in ['q','a','b','f','e','r','s','z1','m','h','b']:
+    if user_input.lower() in ['q','a','b','f','g','e','r','s','z1','m','h','b']:
         return user_input.lower()
     try:
         int(user_input)
@@ -92,8 +99,13 @@ def convert_room_to_id(num):
 
 def create_homeroom():
     room = input("Enter the homeroom room number: ")
+    existing_homeroom = Homeroom.find_by_room(room)
+    
     teacher = input("Enter name of the teacher: ")
     floor = input("Enter the level of the floor: ")
+    if existing_homeroom:
+        print(f'Homeroom {room} already exists')
+        return
     try:
         homeroom = Homeroom.create(int(room),teacher,int(floor))
         print(f'Success: {homeroom}')

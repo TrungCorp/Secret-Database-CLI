@@ -7,6 +7,7 @@ from helpers import (
     list_homerooms,
     list_students_in_hr,
     seed_data,
+    list_by_grade,
     valid_choice,
     delete_Homeroom,
     create_homeroom,
@@ -25,6 +26,7 @@ def main():
     inner_choice = ""
     #LVL 3
     super_inner_choice = ""
+    sort_search = ""
     sort_choice = ""
     s_inner_choice = ""
     m_inner_choice = ""
@@ -50,7 +52,7 @@ def main():
                 #CHOICE LEVEL 2
                 menu_top()
                 
-                displayed_list(sort_choice)
+                displayed_list(sort_choice,sort_search)
                 inner_menu()
                 #IF STRING, TURNS TO LOWERCASE
                 inner_choice = valid_choice("> ")
@@ -59,7 +61,7 @@ def main():
                 if inner_choice == 'q':
                     exit_program()
                 elif inner_choice == 'z1':
-                    print(f'inner choice: {inner_choice},f choice: {f_inner_choice}, s inner choice: {s_inner_choice}')
+                    print(f'inner choice: {inner_choice},search: {sort_search}, s inner choice: {s_inner_choice}')
                 elif inner_choice =='s':
                     while s_inner_choice != 'b':
                         sort_menu()
@@ -67,19 +69,32 @@ def main():
                         if s_inner_choice =='h':
                             if s_inner_choice == sort_choice:
                                 print("Sort option already selected!")
-                                s_inner_choice = ""
-                                inner_choice = ""
-                                break
+                                
 
                             sort_choice = 'h'
                             s_inner_choice = ""
                             inner_choice = ""
                             break
                         elif s_inner_choice == "m":
+                            if s_inner_choice == sort_choice:
+                                print("Sort option already selected!")
+                                
                             sort_choice = 'm'
                             s_inner_choice=""
                             inner_choice =""
                             break
+                        elif s_inner_choice =='g':
+                            sort_choice = 'g'
+                            g_query = input("Enter the floor level you want to sort the list by: ")
+                            if sort_check(g_query):
+                                sort_search = int(g_query)
+                            else:
+                                print("Invalid input!")
+                            s_inner_choice = ""
+                            inner_choice=""
+                            break
+                            
+
                         else:
                             print("Invalid choice")
                     inner_choice= ""
@@ -107,7 +122,9 @@ def main():
                             exit_program()
                     inner_choice =""
                     f_inner_choice = ""
-                    
+
+
+
                 elif inner_choice =='m':
                     
                     while m_inner_choice != 'b':
@@ -160,11 +177,15 @@ def sort_menu():
     print("m. List all Students")
 
     
-def sort_check(picked_choice,sort_choice):
-    pass
+def sort_check(search):
+    try:
+       int(search)
+       return True
+    except ValueError:
+        return False
 
 
-def displayed_list(choice):
+def displayed_list(choice,search = None):
     if choice == "":
         list_homerooms()
         menu_top()
@@ -174,6 +195,9 @@ def displayed_list(choice):
     elif choice == 'm':
         list_students()
         menu_top()
+    elif choice == 'g':
+        list_by_floor(search)
+
 def manage_by_student_menu():
     menu_top()
     print("b. Go back")
