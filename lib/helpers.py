@@ -63,12 +63,15 @@ def list_by_grade(grade):
 
 def list_homerooms():
     homerooms = Homeroom.get_all()
-    for i,homeroom in enumerate(homerooms,start=1):
-        print(f"{i}. {homeroom}")
+    sorted_homeroom = sorted(homerooms, key= lambda homeroom: homeroom.room)
+    for homeroom in sorted_homeroom:
+        print(f"*.Homeroom {homeroom.room}, Teacher: {homeroom.teacher}")
 def list_students():
     students = Student.get_all()
-    for i,student in enumerate(students,start=1):
-        print(f'{i}. {student}')
+    sorted_students = sorted(students, key=lambda student: student.grade)
+    max_name_length = max(len(student.name) for student in sorted_students) + 2
+    for student in sorted_students:
+        print(f'*. {student.name:{max_name_length}},Grade Level: {student.grade}')
 #VALIDATES USER INPUT
 def valid_choice(prompt):
     user_input = input(prompt)

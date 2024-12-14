@@ -165,8 +165,7 @@ def inner_menu():
     print("s. Sort displayed list")
     print("f. Manage by Homeroom")
     print("m. Manage by Student")
-    print("g. Sort by grade level")
-    print("")
+    print("g. Get Detailed Info")
     
     
 def sort_menu():
