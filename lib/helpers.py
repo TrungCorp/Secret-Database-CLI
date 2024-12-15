@@ -97,8 +97,8 @@ def convert_room_to_id(num):
     homerooms = Homeroom.get_all()
     for homeroom in homerooms:
         if num == homeroom.room:
-            return homeroom.id
-    return None
+            return homeroom
+    return 1
 
 def create_homeroom():
     room = input("Enter the homeroom room number: ")
@@ -111,7 +111,7 @@ def create_homeroom():
         return
     try:
         homeroom = Homeroom.create(int(room),teacher,int(floor))
-        print(f'Success: {homeroom}')
+        print(f'Success: Homeroom {homeroom.room} created!')
     except Exception:
         print("Error: ",Exception)
 
@@ -120,9 +120,14 @@ def create_student():
     grade = input("Enter the grade the student is in: ")
     gpa = input("Enter the students GPA: ")
     honors_classes = input("Enter the number of honors classes the student is in: ")
+    homeroom_id = input("Enter the the room number of Homeroom: ")
+    homeroom_id_verif =convert_room_to_id(int(homeroom_id))
+    if homeroom_id_verif == 1:
+        print("Not a valid homeroom")
+        return
     try:
-        student = Student.create(name,int(grade),float(gpa),int(honors_classes))
-        print(f'Success {student}')
+        student = Student.create(name,int(grade),float(gpa),int(honors_classes),homeroom_id_verif)
+        print(f'Success Student: {student.name} added!')
     except Exception as exec:
         print("Error: ",exec)
 

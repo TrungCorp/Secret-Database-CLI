@@ -135,11 +135,11 @@ class Student:
         self.id = None
 
     @classmethod
-    def create(cls, name, grade,gpa,honors_classes, homeroom_id):
+    def create(cls, name, grade,gpa,honors_classes, homeroom):
         """ Initialize a new Student instance and save the object to the database """
-        employee = cls(name, grade,gpa,honors_classes, homeroom_id)
-        employee.save()
-        return employee
+        student = cls(name, grade,gpa,honors_classes, homeroom)
+        student.save()
+        return student
 
     @classmethod
     def instance_from_db(cls, row):
