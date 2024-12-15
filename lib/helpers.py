@@ -56,6 +56,13 @@ def list_by_grade(grade):
         if student.grade == grade:
             print(student)
         
+def detailed_student(name):
+    students = Student.get_all()
+    for student in students:
+        if student.name == name:
+            print(f"Name. {student.name},Grade Level: {student.grade},GPA: {student.gpa},Honors Classes: {student.honors_classes},Homeroom: {Homeroom.all[student.homeroom_id].room}")
+            return 1
+    return None
 
         
 
