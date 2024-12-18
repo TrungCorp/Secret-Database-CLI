@@ -14,7 +14,7 @@ def seed_data():
     homeroom_201 = Homeroom.create(201,"Ms. Martha",2)
     homeroom_301 = Homeroom.create(301,"Mrs. Casca",3)
     
-    Student.create("JoJo Joestar",10,2.7,0,homeroom_301)
+    Student.create("Jojo Joestar",10,2.7,0,homeroom_301)
     Student.create("Josuke Joestar",9,3.7,2,homeroom_301)
     Student.create("Alexander Jono",9,4.0,2,homeroom_103)
     Student.create("Cynthia Unos",10,3.8,2,homeroom_201)
@@ -50,19 +50,67 @@ def list_by_floor(hr_floor):
             count += 1
     if count ==0:
         print("No homerooms found on this floor")
+        return None
+    else:
+        return 1
+def student_check(grade):
+    students = Student.get_all()
+    try:
+        int(grade)
+    except ValueError:
+        print("Value not an integer")
+        return False
+    for student in students:
+        if student.grade == int(grade):
+            return True
+    print("Grade not found")
+    
+
 def list_by_grade(grade):
     students = Student.get_all()
-    for student in students:
+    sorted_students = sorted(students, key=lambda student: student.name)
+    max_name_length = max(len(student.name) for student in sorted_students) + 2
+    for student in sorted_students:
         if student.grade == grade:
-            print(student)
-        
+            homeroom = Homeroom.find_by_id(student.homeroom_id)
+            print(f'{student.name:{max_name_length}},Grade: {student.grade},GPA: {student.gpa},Homeroom: Room {homeroom.room}')
+def homeroom_check(floor):
+    homerooms = Homeroom.get_all()
+    try:
+        int(floor)
+    except ValueError:
+        print("Value not an integer")
+        return False
+    for homeroom in homerooms:
+        if homeroom.floor == int(floor):
+            return True
+    print("Floor not found")
+def homeroom_list(floor):
+    homerooms = Homeroom.get_all()
+    for homeroom in homerooms:
+        if homeroom.floor == floor:
+            print(f'Homeroom {homeroom.room},Floor: {homeroom.floor},Teacher: {homeroom.teacher}')
+    
+
+
 def detailed_student(name):
     students = Student.get_all()
     for student in students:
         if student.name == name:
-            print(f"Name. {student.name},Grade Level: {student.grade},GPA: {student.gpa},Honors Classes: {student.honors_classes},Homeroom: {Homeroom.all[student.homeroom_id].room}")
-            return 1
+            
+            return student
     return None
+def detailed_homeroom(room):
+    homerooms = Homeroom.get_all()
+    try:
+        int(room)
+    except ValueError:
+        return None
+    for homeroom in homerooms:
+        if homeroom.room == int(room):
+            return homeroom
+    return None
+
 
         
 
@@ -82,7 +130,7 @@ def list_students():
 #VALIDATES USER INPUT
 def valid_choice(prompt):
     user_input = input(prompt)
-    if user_input.lower() in ['q','a','b','f','g','e','r','s','z1','m','h','b']:
+    if user_input.lower() in ['q','a','b','f','g','e','r','s','z1','m','h','b','c']:
         return user_input.lower()
     try:
         int(user_input)
